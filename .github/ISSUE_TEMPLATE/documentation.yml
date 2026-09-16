@@ -1,0 +1,73 @@
+name: 文档修正
+description: 报告 README、安装说明或某个 Skill 文档中不正确、缺失或不清晰的内容。
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        用于仓库文档与 Skill 文档（`SKILL.md`、`references/`、case README）的错误或缺失。
+        提问请使用 [Discussions](https://github.com/Deep-Spark/iluvatar-agent-skills/discussions)。
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+      description: 文档里哪里不正确、缺失或不清晰？
+    validations:
+      required: true
+
+  - type: dropdown
+    id: skill
+    attributes:
+      label: 涉及的 Skill
+      description: 若问题在某个 Skill 的文档中，请选择名称；仓库级 README/安装说明选「仓库文档」。
+      options:
+        - 仓库文档（README / 安装说明）
+        - iluvatar-cuda-base
+        - iluvatar-ixrt
+        - iluvatar-ixjpeg
+        - iluvatar-ixcodec
+        - tools-ixkncli-guide
+        - tools-ixkn-perf-analysis
+        - 不确定 / 其他（请在描述中说明）
+    validations:
+      required: true
+
+  - type: input
+    id: page
+    attributes:
+      label: 涉及的页面或文件
+      description: URL 或仓库内路径，例如 `README.md#快速开始`、`skills/iluvatar-ixrt/SKILL.md`。
+      placeholder: README.md#寻求帮助
+    validations:
+      required: false
+
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: 问题类型
+      options:
+        - 信息不准确
+        - 文档缺失
+        - 表述不清
+        - 链接或交叉引用失效
+        - 格式或渲染问题
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: 建议修改
+      description: 若已知道正确内容，请写在这里。
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 我已搜索现有 Issue，确认不是重复提交
+          required: true

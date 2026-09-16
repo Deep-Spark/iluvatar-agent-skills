@@ -1,0 +1,42 @@
+build
+build_nv
+build_on
+build_off
+build_fail
+build_max
+build_contention
+*.o 
+*.out
+
+# Generated test output
+pass.txt
+error.txt
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*~
+
+# Secrets / local
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+*.local
+.cache/
+tmp/
+temp/
+
+# Language toolchains (if scripts exist)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+node_modules/

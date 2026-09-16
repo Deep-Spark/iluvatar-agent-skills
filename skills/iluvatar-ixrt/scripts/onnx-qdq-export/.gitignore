@@ -1,0 +1,5 @@
+.venv/
+*.onnx
+yolov8n.pt
+__pycache__/
+runs/

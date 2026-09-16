@@ -1,0 +1,11 @@
+# Controls the "Create new issue" picker on
+# https://github.com/Deep-Spark/iluvatar-agent-skills/issues/new/choose
+# - 关闭空白 Issue，保证每条都能按模板分流。
+# - 提问请走 Discussions，不要占用 Issue 跟踪器。
+
+blank_issues_enabled: false
+
+contact_links:
+  - name: 提问或一般讨论
+    url: https://github.com/Deep-Spark/iluvatar-agent-skills/discussions
+    about: 提问、想法或一般交流请使用 Discussions。Issue 仅用于缺陷报告、带设计说明的功能提案，以及文档问题。

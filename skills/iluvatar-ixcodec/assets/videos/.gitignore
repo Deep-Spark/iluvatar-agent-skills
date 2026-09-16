@@ -1,0 +1,4 @@
+*
+!.gitignore
+!generate.sh
+!generate_all.sh

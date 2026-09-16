@@ -1,0 +1,47 @@
+实测命令：
+
+```bash
+bash build.sh
+bash run.sh
+```
+
+关键日志摘录：
+
+```text
+create name=h264_420_256x128_nv12 bitFormat=0 layout=NV12 scale=0x0 ret=0 IX_SUCCESS
+decode ret=0 IX_SUCCESS bytes=6477
+decode_map_sync name=h264_420_256x128_nv12 decode_success=1 immediate_map=0
+result name=h264_420_256x128_nv12 got=1 pitch=256 height=128 map_timestamp=1 callback=256x128 chroma=1 lumaDepth=8 layout=NV12
+
+parser_result name=h264_parser create=0 parse=0 eos_parse=0 sequence=1 decode=2 picture_decode=1 eos_decode=1 display=2 decode_ret=0 got=1 pitch=256 height=128 map_timestamp=0
+
+parser_result name=vp9_parser create=0 parse=0 eos_parse=0 sequence=1 decode=2 picture_decode=1 eos_decode=1 display=2 decode_ret=0 got=1 pitch=256 height=128 map_timestamp=0
+
+create name=vp9_420_256x128_nv12 bitFormat=13 layout=NV12 scale=0x0 ret=0 IX_SUCCESS
+decode ret=0 IX_SUCCESS bytes=5758
+decode_map_sync name=vp9_420_256x128_nv12 decode_success=1 immediate_map=0
+result name=vp9_420_256x128_nv12 got=1 pitch=256 height=128 map_timestamp=1 callback=256x128 chroma=1 lumaDepth=8 layout=NV12
+
+create name=hevc_main_l51_high_4096x2160_nv12 bitFormat=12 layout=NV12 scale=0x0 ret=0 IX_SUCCESS
+decode ret=0 IX_SUCCESS bytes=329686
+decode_map_sync name=hevc_main_l51_high_4096x2160_nv12 decode_success=1 immediate_map=0
+decode_success_no_display_frame_before_eos name=hevc_main_l51_high_4096x2160_nv12 wait_ms=5000
+eos ret=0 IX_SUCCESS
+after_eos_map name=hevc_main_l51_high_4096x2160_nv12 got=1
+result name=hevc_main_l51_high_4096x2160_nv12 got=1 pitch=4096 height=2160 map_timestamp=1 callback=4096x2160 chroma=1 lumaDepth=8 layout=NV12
+
+create name=hevc_main10_l51_high_4096x2160_nv12 bitFormat=12 layout=NV12 scale=0x0 ret=0 IX_SUCCESS
+decode ret=0 IX_SUCCESS bytes=329071
+decode_map_sync name=hevc_main10_l51_high_4096x2160_nv12 decode_success=1 immediate_map=0
+decode_success_no_display_frame_before_eos name=hevc_main10_l51_high_4096x2160_nv12 wait_ms=5000
+eos ret=0 IX_SUCCESS
+after_eos_map name=hevc_main10_l51_high_4096x2160_nv12 got=1
+result name=hevc_main10_l51_high_4096x2160_nv12 got=1 pitch=4096 height=2160 map_timestamp=1 callback=4096x2160 chroma=1 lumaDepth=10 layout=NV12
+```
+
+`ixvidDecodePicture` 返回 `IX_SUCCESS` 只表示 picture 已被接收。
+`decode_success=1 immediate_map=0` 证明此时不一定已有显示帧可 map；HEVC Main/Main10
+还需要 EOS 冲刷才得到显示帧。因此输入提交和输出 map 必须按异步线程模型处理。
+
+直喂路径把 `IXVIDPICPARAMS.timestamp=1` 传到 map；parser source packet/display info
+没有 timestamp 字段，parser 路径 map 返回 0，PTS 必须由应用单独维护。

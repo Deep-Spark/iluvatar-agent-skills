@@ -1,0 +1,7 @@
+# Build artifacts (root .gitignore already covers *.o / *.d / *.out / pass.txt)
+*~
+*.swp
+*.log
+
+# Extensionless binaries from Makefile-driven cases (no .out suffix)
+**/vector_add

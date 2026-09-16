@@ -1,0 +1,109 @@
+name: 缺陷报告
+description: 报告已确认、且无法自行修复的缺陷（含某个 Skill 的内容错误或能力缺失）。
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        提问或一般讨论请使用 [Discussions](https://github.com/Deep-Spark/iluvatar-agent-skills/discussions)。
+        Skill 名称见 [Skills 总览](https://github.com/Deep-Spark/iluvatar-agent-skills#skills-总览)。
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: 问题范围
+      description: Skill 内容问题请选择对应 Skill；安装、README 或仓库文档问题请选择「仓库 / 安装 / 文档」。
+      options:
+        - Skill 内容（缺陷、能力缺失或内容错误）
+        - 仓库 / 安装 / 文档
+        - 不确定
+    validations:
+      required: true
+
+  - type: dropdown
+    id: skill
+    attributes:
+      label: 涉及的 Skill
+      description: Skill 内容问题必选具体名称；若与单个 Skill 无关，选「不适用」。
+      options:
+        - iluvatar-cuda-base
+        - iluvatar-ixrt
+        - iluvatar-ixjpeg
+        - iluvatar-ixcodec
+        - tools-ixkncli-guide
+        - tools-ixkn-perf-analysis
+        - 不适用
+        - 不确定 / 其他（请在描述中说明）
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+      description: 实际发生了什么？你期望发生什么？
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 复现步骤
+      description: 请给出可复现的最小步骤。
+      placeholder: |
+        1. 运行 `npx skills add Deep-Spark/iluvatar-agent-skills --skill iluvatar-cuda-base`
+        2. 在 Agent 中提出相关任务
+        3. 观察到失败或错误结论
+    validations:
+      required: true
+
+  - type: dropdown
+    id: agent
+    attributes:
+      label: Agent 客户端
+      description: 该问题是在哪个客户端上出现的？
+      options:
+        - CodeBuddy
+        - TRAE
+        - Cursor
+        - OpenClaw
+        - Claude Code
+        - Codex
+        - GitHub Copilot
+        - npx skills CLI
+        - 其他（请在描述中说明）
+        - 不适用
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境信息
+      description: 操作系统、Agent 版本、skills CLI 版本等。
+      placeholder: |
+        - OS: macOS 15 / Ubuntu 24.04 / Windows 11 + WSL2
+        - Agent: CodeBuddy / TRAE / Cursor / OpenClaw …
+        - skills CLI: `npx skills --version` 的输出
+        - Corex SDK: 当前安装包（如适用）
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志 / 错误输出
+      description: 堆栈、控制台输出或其他相关日志。请勿粘贴密钥或内网绝对路径。
+      render: shell
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 我已确认该问题可复现
+          required: true
+        - label: 我已搜索现有 Issue，确认不是重复提交
+          required: true
